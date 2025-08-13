@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "dependencies": {
+    "elysia": "^0.7.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
