@@ -71,7 +71,7 @@ const Home: NextPage = () => {
         <meta property="og:image" content="https://clt.lol/img/pfp.jpg" />
         <meta property="og:url" content="https://clt.lol/" />
 
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="clt.lol" />
         <meta name="twitter:description" content="Security Enthusiast, Software Engineer." />
         <meta name="twitter:image" content="https://clt.lol/img/pfp.jpg" />
@@ -246,3 +246,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
