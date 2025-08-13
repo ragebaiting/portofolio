@@ -28,7 +28,7 @@ class SpotifyFetch {
 	public async fetch() {
 		this._setLoading(true);
 		try {
-			const res = await fetch("http://localhost:3001/api/lanyard");
+			const res = await fetch("https://rest.clt.lol/api/lanyard");
 			const data = await res.json();
 			if (data && data.spotify && this._active) {
 				this._setSpotify(data.spotify);
@@ -60,3 +60,4 @@ export function spotify() {
 
 	return { spotify, loading };
 }
+
