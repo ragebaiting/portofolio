@@ -56,7 +56,7 @@ const Home: NextPage = () => {
 
   const [expLoading, setExpLoading] = useState(false);
   const experiences = [
-    { role: "Lead Dev @ Datawave (2024 - 2025)" }
+    { role: "Lead Dev @ Datawave (2023 - 2024)" }
   ];
 
   return (
@@ -132,7 +132,7 @@ const Home: NextPage = () => {
       <div className="fixed left-0 bottom-0 z-50 p-20 select-none">
         <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
           <div className="flex items-center gap-3 mb-3">
-            {discordLoading ? (
+            {(!discordData?.discord_user || discordLoading) ? (
               <>
                 <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
                 <div className="flex flex-col gap-1 ml-2">
@@ -141,7 +141,7 @@ const Home: NextPage = () => {
                   <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
                 </div>
               </>
-            ) : discordData?.discord_user ? (
+            ) : (
               <>
                 <img
                   src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
@@ -163,8 +163,6 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </>
-            ) : (
-              <p className="text-indigo-400 text-xs">[Discord] Not online or no data :(</p>
             )}
           </div>
           <div className="flex items-center gap-4 mb-1 text-lg">
