@@ -119,7 +119,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex items-center gap-4 mb-1 text-lg">
             <a
-              href="https://github.com/"
+              href="https://github.com/ragebaiting"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition flex items-center gap-1"
@@ -128,7 +128,7 @@ const Home: NextPage = () => {
               <span className="text-xs font-normal ml-1">[Github]</span>
             </a>
             <a
-              href="https://roblox.com/"
+              href="https://roblox.com/users/8756713122/profile"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition flex items-center gap-1"
@@ -137,7 +137,7 @@ const Home: NextPage = () => {
               <span className="text-xs font-normal ml-1">[Roblox]</span>
             </a>
             <a
-              href="https://discord.com/"
+              href="https://discord.com/users/1139680335198687293"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition flex items-center gap-1"
@@ -146,7 +146,7 @@ const Home: NextPage = () => {
               <span className="text-xs font-normal ml-1">[Discord]</span>
             </a>
             <a
-              href="https://twitter.com/"
+              href="https://clt.lol/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition flex items-center gap-1"
@@ -163,7 +163,7 @@ const Home: NextPage = () => {
             <span>🇬🇧 London, UK</span>
             <span className="mx-2">•</span>
             <a
-              href="https://github.com/yourusername/your-repo"
+              href="https://github.com/ragebaiting/portofolio"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-200 underline text-xs"
@@ -178,3 +178,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
