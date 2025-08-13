@@ -231,7 +231,7 @@ const Home: NextPage = () => {
             <span>🇬🇧 London, UK</span>
             <span className="mx-2">•</span>
             <a
-              href="https://github.com/ragebaiting/portofolio/frontend"
+              href="https://github.com/ragebaiting/portofolio"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-200 underline text-xs"
@@ -246,5 +246,6 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
 
 
