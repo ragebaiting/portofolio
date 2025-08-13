@@ -1,6 +1,7 @@
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useState } from 'react';
 import { spotify } from '../hooks/spotify';
 import { discord } from '../hooks/discord';
 import { time } from '../hooks/time';
@@ -39,9 +40,24 @@ const useClock = () => {
 };
 
 const Home: NextPage = () => {
-  const { spotify: spotifyData, loading } = spotify();
+  const { spotify: spotifyData } = spotify();
+  const [loading, setLoading] = useState(false);
+
   const { discord: discordData } = discord();
+  const [discordLoading, setDiscordLoading] = useState(false);
+
   const { isSleeping, timeStr } = useClock();
+  const [timeLoading, setTimeLoading] = useState(false);
+
+  const [descLoading, setDescLoading] = useState(false);
+  const description = [
+    "clt, backend-focused software engineer, based around next.js, fluent in langs such as rust, elixir, typescript"
+  ];
+
+  const [expLoading, setExpLoading] = useState(false);
+  const experiences = [
+    { role: "Lead Dev @ Datawave (2024 - 2025)" }
+  ];
 
   return (
     <>
@@ -51,7 +67,11 @@ const Home: NextPage = () => {
       >
         <div className="w-full h-32">
           <div className="w-20 h-20 bg-white rounded-md mb-2 flex items-center justify-center overflow-hidden">
-            <img src="/img/pfp.jpg" alt="Profile" className="w-full h-full object-cover" />
+            {descLoading ? (
+              <div className="w-full h-full bg-zinc-700/40 animate-pulse" />
+            ) : (
+              <img src="/img/pfp.jpg" alt="Profile" className="w-full h-full object-cover" />
+            )}
           </div>
           <h1
             className="text-white text-4xl leading-snug"
@@ -60,10 +80,22 @@ const Home: NextPage = () => {
             Security <span className="italic">Enthusiast</span>,<br />
             Full-Stack Software <span className="italic">Engineer</span>.
           </h1>
-          <p className="text-zinc-500/80 max-w-[500px] mb-14 text-sm font-thin mt-5">
-            clt, backend-focused software engineer, based around next.js, fluent in langs such as rust, elixir, typescript
-          </p>
-          {spotifyData ? (
+          {descLoading ? (
+            <div className="w-[350px] h-4 bg-zinc-700/40 rounded animate-pulse mb-14 mt-5" />
+          ) : (
+            description.map((desc, i) => (
+              <p key={i} className="text-zinc-500/80 max-w-[500px] mb-14 text-sm font-thin mt-5">{desc}</p>
+            ))
+          )}
+          {loading ? (
+            <div className="flex items-center gap-3 -mt-5 mb-10">
+              <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
+              <div className="flex flex-col gap-1">
+                <div className="w-40 h-4 bg-zinc-700/40 rounded animate-pulse" />
+                <div className="w-24 h-3 bg-zinc-700/20 rounded animate-pulse" />
+              </div>
+            </div>
+          ) : spotifyData ? (
             <div className="flex items-center gap-3 -mt-5 mb-10">
               <img
                 src={spotifyData.album_art_url}
@@ -82,7 +114,16 @@ const Home: NextPage = () => {
           )}
 
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Experiences</p>
-          <p className="text-zinc-600/50 text-xs ml-3">- Lead Dev @ Datawave (2024 - 2025)</p>
+          {expLoading ? (
+            <div className="ml-3 flex flex-col gap-2">
+              <div className="w-48 h-3 bg-zinc-700/40 rounded animate-pulse" />
+              <div className="w-32 h-3 bg-zinc-700/20 rounded animate-pulse" />
+            </div>
+          ) : (
+            experiences.map((exp, i) => (
+              <p key={i} className="text-zinc-600/50 text-xs ml-3">- {exp.role}</p>
+            ))
+          )}
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Projects</p>
           <div className="text-zinc-400/20 ml-3 text-xs">nothing here.. yet.. :(</div>
         </div>
@@ -91,7 +132,16 @@ const Home: NextPage = () => {
       <div className="fixed left-0 bottom-0 z-50 p-20 select-none">
         <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
           <div className="flex items-center gap-3 mb-3">
-            {discordData?.discord_user ? (
+            {discordLoading ? (
+              <>
+                <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
+                <div className="flex flex-col gap-1 ml-2">
+                  <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+                  <div className="w-20 h-3 bg-zinc-700/20 rounded animate-pulse" />
+                  <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
+                </div>
+              </>
+            ) : discordData?.discord_user ? (
               <>
                 <img
                   src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
@@ -156,14 +206,18 @@ const Home: NextPage = () => {
             </a>
           </div>
           <div className="flex items-center gap-2">
-            <span>
-              {timeStr} - Likely {isSleeping ? 'sleeping' : 'awake'}.
-            </span>
+            {timeLoading ? (
+              <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+            ) : (
+              <span>
+                {timeStr} - Likely {isSleeping ? 'sleeping' : 'awake'}.
+              </span>
+            )}
             <span className="mx-2">•</span>
             <span>🇬🇧 London, UK</span>
             <span className="mx-2">•</span>
             <a
-              href="https://github.com/ragebaiting/portofolio"
+              href="https://github.com/ragebaiting/portofolio/frontend"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-200 underline text-xs"
@@ -178,4 +232,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
