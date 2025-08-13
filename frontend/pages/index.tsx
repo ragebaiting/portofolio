@@ -61,6 +61,22 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>x_x</title>
+        <meta name="description" content="Security Enthusiast, Software Engineer." />
+        <meta name="theme-color" content="#ffffff" /> 
+
+        <meta property="og:title" content="clt.lol" />
+        <meta property="og:description" content="Security Enthusiast, Software Engineer." />
+        <meta property="og:image" content="https://clt.lol/img/pfp.jpg" />
+        <meta property="og:url" content="https://clt.lol/" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="clt.lol" />
+        <meta name="twitter:description" content="Security Enthusiast, Software Engineer." />
+        <meta name="twitter:image" content="https://clt.lol/img/pfp.jpg" />
+      </Head>
+
       <main
         className="min-h-screen bg-zinc-950 p-20"
         style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
@@ -215,7 +231,7 @@ const Home: NextPage = () => {
             <span>🇬🇧 London, UK</span>
             <span className="mx-2">•</span>
             <a
-              href="https://github.com/ragebaiting/portofolio"
+              href="https://github.com/ragebaiting/portofolio/frontend"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-200 underline text-xs"
@@ -230,4 +246,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
