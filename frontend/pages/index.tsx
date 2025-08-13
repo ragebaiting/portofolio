@@ -93,7 +93,7 @@ const Home: NextPage = () => {
             className="text-white text-4xl leading-snug"
             style={{ fontFamily: 'Crimson Pro, serif' }}
           >
-            Security <span className="italic">Enthusiast</span>,<br />
+            Cybersec <span className="italic">Analyst</span>,<br />
             Full-Stack Software <span className="italic">Engineer</span>.
           </h1>
           {descLoading ? (
@@ -246,4 +246,5 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
 
