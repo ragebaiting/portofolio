@@ -5,5 +5,4 @@ My current portofolio.
  > Powered by Next.JS, Tailwind, TSX
 
 ### Backend
- - Powered by Elysia.JS
- - ./api/Lanyard - Returns Discord data + Spotify Listening
+ > Powered by Elysia.JS, TS
