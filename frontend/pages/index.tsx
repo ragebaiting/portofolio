@@ -1,4 +1,6 @@
 
+// u can steal this in 2 years i probably would of killed myself by then 
+
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -51,7 +53,7 @@ const Home: NextPage = () => {
 
   const [descLoading, setDescLoading] = useState(false);
   const description = [
-    "clt, backend-focused software engineer, based around next.js, fluent in langs such as rust, elixir, typescript"
+    "clt, backend-focused software engineer, based around next.js, fluent in langs such as rust, elixir, typescript."
   ];
 
   const [expLoading, setExpLoading] = useState(false);
@@ -77,12 +79,10 @@ const Home: NextPage = () => {
         <meta name="twitter:image" content="https://clt.lol/img/pfp.jpg" />
       </Head>
 
-      <main
-        className="min-h-screen bg-zinc-950 p-20"
-        style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
-      >
-        <div className="w-full h-32">
-          <div className="w-20 h-20 bg-white rounded-md mb-2 flex items-center justify-center overflow-hidden">
+      <div className="flex flex-col min-h-screen bg-zinc-950" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+        <main className="flex-1 p-20">
+          <div className="w-full">
+          <div className="w-20 h-20 rounded-md mb-2 flex items-center justify-center overflow-hidden">
             {descLoading ? (
               <div className="w-full h-full bg-zinc-700/40 animate-pulse" />
             ) : (
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
             ))
           )}
           {loading ? (
-            <div className="flex items-center gap-3 -mt-5 mb-10">
+            <div className="flex items-center gap-3 mb-10">
               <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
               <div className="flex flex-col gap-1">
                 <div className="w-40 h-4 bg-zinc-700/40 rounded animate-pulse" />
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           ) : spotifyData ? (
-            <div className="flex items-center gap-3 -mt-5 mb-10">
+            <div className="flex items-center gap-3 mb-10">
               <img
                 src={spotifyData.album_art_url}
                 alt="Album Art"
@@ -128,7 +128,6 @@ const Home: NextPage = () => {
           ) : (
             <p className="text-green-500 text-xs mt-5">[Spotify] Not listening to anything :(</p>
           )}
-
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Experiences</p>
           {expLoading ? (
             <div className="ml-3 flex flex-col gap-2">
@@ -141,103 +140,111 @@ const Home: NextPage = () => {
             ))
           )}
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Projects</p>
-          <div className="text-zinc-400/20 ml-3 text-xs">nothing here.. yet.. :(</div>
-        </div>
-      </main>
-
-      <div className="fixed left-0 bottom-0 z-50 p-20 select-none">
-        <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
-          <div className="flex items-center gap-3 mb-3">
-            {(!discordData?.discord_user || discordLoading) ? (
-              <>
-                <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
-                <div className="flex flex-col gap-1 ml-2">
-                  <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
-                  <div className="w-20 h-3 bg-zinc-700/20 rounded animate-pulse" />
-                  <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
-                </div>
-              </>
-            ) : (
-              <>
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
-                  alt="Discord Avatar"
-                  className="w-14 h-14 rounded"
-                />
-                <div>
-                  <p className="text-zinc-300 text-xs font-semibold">
-                    {discordData.discord_user.display_name || `@${discordData.discord_user.username}`}
-                  </p>
-                  <p className="text-zinc-400/60 text-xs -mt-1 mb-1">
-                    @{discordData.discord_user.username}
-                  </p>
-                  <div className="flex items-center mt-1">
-                    <StatusDot status={discordData.discord_status} />
-                    <span className={`text-xs font-semibold ${getStatus(discordData.discord_status).text}`}>
-                      {discordData.discord_status}
-                    </span>
+          {loading ? (
+            <div className="ml-3 flex flex-col gap-2">
+              <div className="w-48 h-3 bg-zinc-700/40 rounded animate-pulse" />
+              <div className="w-32 h-3 bg-zinc-700/20 rounded animate-pulse" />
+            </div>
+          ) : (
+            <div className="text-zinc-400/20 ml-3 text-xs">nothing here.. yet.. :(</div>
+          )}
+          </div>
+          
+        </main>
+        <div className="p-20 select-none w-full">
+          <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
+            <div className="flex items-center gap-3 mb-3">
+              {(!discordData?.discord_user || discordLoading) ? (
+                <>
+                  <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
+                  <div className="flex flex-col gap-1 ml-2">
+                    <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+                    <div className="w-20 h-3 bg-zinc-700/20 rounded animate-pulse" />
+                    <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
                   </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-4 mb-1 text-lg">
-            <a
-              href="https://github.com/ragebaiting"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition flex items-center gap-1"
-            >
-              <FaGithub />
-              <span className="text-xs font-normal ml-1">[Github]</span>
-            </a>
-            <a
-              href="https://roblox.com/users/8756713122/profile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition flex items-center gap-1"
-            >
-              <SiRoblox />
-              <span className="text-xs font-normal ml-1">[Roblox]</span>
-            </a>
-            <a
-              href="https://discord.com/users/1139680335198687293"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition flex items-center gap-1"
-            >
-              <FaDiscord />
-              <span className="text-xs font-normal ml-1">[Discord]</span>
-            </a>
-            <a
-              href="https://clt.lol/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition flex items-center gap-1"
-            >
-              <FaTwitter />
-              <span className="text-xs font-normal ml-1">[Twitter (x)]</span>
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            {timeLoading ? (
-              <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
-            ) : (
-              <span>
-                {timeStr} - Likely {isSleeping ? 'sleeping' : 'awake'}.
-              </span>
-            )}
-            <span className="mx-2">•</span>
-            <span>🇬🇧 London, UK</span>
-            <span className="mx-2">•</span>
-            <a
-              href="https://github.com/ragebaiting/portofolio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:text-blue-200 underline text-xs"
-            >
-              Page Source
-            </a>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
+                    alt="Discord Avatar"
+                    className="w-14 h-14 rounded"
+                  />
+                  <div>
+                    <p className="text-zinc-300 text-xs font-semibold">
+                      {discordData.discord_user.display_name || `@${discordData.discord_user.username}`}
+                    </p>
+                    <p className="text-zinc-400/60 text-xs -mt-1 mb-1">
+                      @{discordData.discord_user.username}
+                    </p>
+                    <div className="flex items-center mt-1">
+                      <StatusDot status={discordData.discord_status} />
+                      <span className={`text-xs font-semibold ${getStatus(discordData.discord_status).text}`}>
+                        {discordData.discord_status}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-4 mb-1 text-lg">
+              <a
+                href="https://github.com/ragebaiting"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition flex items-center gap-1"
+              >
+                <FaGithub />
+                <span className="text-xs font-normal ml-1">[Github]</span>
+              </a>
+              <a
+                href="https://roblox.com/users/8756713122/profile"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition flex items-center gap-1"
+              >
+                <SiRoblox />
+                <span className="text-xs font-normal ml-1">[Roblox]</span>
+              </a>
+              <a
+                href="https://discord.com/users/1139680335198687293"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition flex items-center gap-1"
+              >
+                <FaDiscord />
+                <span className="text-xs font-normal ml-1">[Discord]</span>
+              </a>
+              <a
+                href="https://clt.lol/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition flex items-center gap-1"
+              >
+                <FaTwitter />
+                <span className="text-xs font-normal ml-1">[Twitter (x)]</span>
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
+              {timeLoading ? (
+                <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+              ) : (
+                <span>
+                  {timeStr} - Likely {isSleeping ? 'sleeping' : 'awake'}.
+                </span>
+              )}
+              <span className="mx-2">•</span>
+              <span>🇬🇧 London, UK</span>
+              <span className="mx-2">•</span>
+              <a
+                href="https://github.com/ragebaiting/portofolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-200 underline text-xs"
+              >
+                Page Source
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -246,6 +253,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-
 
