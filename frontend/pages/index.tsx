@@ -3,12 +3,15 @@
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { spotify } from '../hooks/spotify';
 import { discord } from '../hooks/discord';
 import { time } from '../hooks/time';
+import { battery } from '../hooks/battery';
 import { FaGithub, FaDiscord, FaTwitter } from 'react-icons/fa';
 import { SiRoblox } from 'react-icons/si';
+import { IoBatteryFull, IoBatteryHalfOutline, IoBatteryDeadOutline } from "react-icons/io5";
 
 const Status = {
   dnd: { text: 'text-red-500', bg: 'bg-red-500' },
@@ -48,17 +51,24 @@ const Home: NextPage = () => {
   const { discord: discordData } = discord();
   const [discordLoading, setDiscordLoading] = useState(false);
 
+  const { battery: bat } = battery();
+  const [mounted, setMounted] = useState(false);
+
   const { isSleeping, timeStr } = useClock();
   const [timeLoading, setTimeLoading] = useState(false);
 
   const [descLoading, setDescLoading] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const description = [
     "clt, backend-focused software engineer, based around next.js, fluent in langs such as rust, elixir, typescript."
   ];
 
   const [expLoading, setExpLoading] = useState(false);
   const experiences = [
-    { role: "Lead Dev @ Datawave (2023 - 2024)" }
+    { role: "Lead Dev @ Datawave", period: "2023 - 2024" }
   ];
 
   return (
@@ -93,7 +103,7 @@ const Home: NextPage = () => {
             className="text-white text-4xl leading-snug"
             style={{ fontFamily: 'Crimson Pro, serif' }}
           >
-            Cybersec <span className="italic">Analyst</span>,<br />
+            Cybersec <span className="italic">Analyst</span>,<div className="ml-1 w-12 h-5 text-xs bg-zinc-700/40 border border-zinc-500/20 text-zinc-400/60 rounded inline-flex items-center justify-center">he/him</div><br />
             Full-Stack Software <span className="italic">Engineer</span>.
           </h1>
           {descLoading ? (
@@ -103,6 +113,29 @@ const Home: NextPage = () => {
               <p key={i} className="text-zinc-500/80 max-w-[500px] mb-14 text-sm font-thin mt-5">{desc}</p>
             ))
           )}
+          <div className="flex items-center gap-2 mb-5">
+            <span className="text-zinc-500/80 text-xs">iPhone 15 Pro Max</span>
+            {!mounted || !bat ? (
+              <div className="w-8 h-3 bg-zinc-700/40 rounded animate-pulse" />
+            ) : (
+              <>
+                <span className={`text-xs ${
+                  bat.Battery < 20 ? 'text-red-500' : 
+                  bat.Battery < 70 ? 'text-yellow-500' : 
+                  'text-green-500'
+                }`}>
+                  {bat.Battery}%
+                </span>
+                {bat.Battery < 20 ? (
+                  <IoBatteryDeadOutline className="text-red-500 text-lg" />
+                ) : bat.Battery < 70 ? (
+                  <IoBatteryHalfOutline className="text-yellow-500 text-lg" />
+                ) : (
+                  <IoBatteryFull className="text-green-500 text-lg" />
+                )}
+              </>
+            )}
+          </div>
           {loading ? (
             <div className="flex items-center gap-3 mb-10">
               <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
@@ -136,7 +169,7 @@ const Home: NextPage = () => {
             </div>
           ) : (
             experiences.map((exp, i) => (
-              <p key={i} className="text-zinc-600/50 text-xs ml-3">- {exp.role}</p>
+              <p key={i} className="text-zinc-600/50 text-xs ml-3 flex items-center gap-2">- {exp.role} <div className="text-[8px] text-zinc-500 bg-zinc-700/20 border border-zinc-500/10 rounded inline-flex items-center justify-center px-1 h-5">{exp.period}</div></p>
             ))
           )}
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Projects</p>
@@ -230,7 +263,7 @@ const Home: NextPage = () => {
                 <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
               ) : (
                 <span>
-                  {timeStr} - Likely {isSleeping ? 'sleeping' : 'awake'}.
+                  {mounted ? `${timeStr} - Likely ${isSleeping ? 'sleeping' : 'awake'}.` : 'Loading...'}
                 </span>
               )}
               <span className="mx-2">•</span>
@@ -252,5 +285,14 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+const HomePage = dynamic(() => Promise.resolve(Home), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center min-h-screen bg-zinc-950">
+      <div className="w-8 h-8 border-2 border-zinc-700 border-t-white rounded-full animate-spin" />
+    </div>
+  )
+});
+
+export default HomePage;
 
