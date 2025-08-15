@@ -1,8 +1,14 @@
-.env
-.env.local
-.env.production
+backend/.env
+backend/.env.local
+backend/.env.production
 
-node_modules/
-bun.lockb
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+backend/node_modules/
+frontend/node_modules/
+backend/bun.lockb
+frontend/bun.lockb
 
 *.log
