@@ -1,0 +1,8 @@
+.env
+.env.local
+.env.production
+
+node_modules/
+bun.lockb
+
+*.log
