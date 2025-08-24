@@ -2,7 +2,7 @@
 import { Elysia } from 'elysia';
 
 // for anyone reading this is the discord id used for the data fetching :3
-const USER_ID = '1139680335198687293';
+const USER_ID = '1389302831600631899';
 
 let lanyardPresence: any = null;
 
@@ -120,3 +120,4 @@ const app = new Elysia()
   .listen(3001);
 
 console.log('server running on :3001');
+
