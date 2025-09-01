@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 import { spotify } from '../hooks/spotify';
 import { discord } from '../hooks/discord';
 import { time } from '../hooks/time';
-import { battery } from '../hooks/battery';
+import { battery, multiBattery } from '../hooks/battery';
 import { FaGithub, FaDiscord, FaTwitter } from 'react-icons/fa';
 import { SiRoblox } from 'react-icons/si';
 import { IoBatteryFull, IoBatteryHalfOutline, IoBatteryDeadOutline } from "react-icons/io5";
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
   const { discord: discordData } = discord();
   const [discordLoading, setDiscordLoading] = useState(false);
 
-  const { battery: bat } = battery();
+  const { batteries } = multiBattery();
   const [mounted, setMounted] = useState(false);
 
   const { isSleeping, timeStr } = useClock();
@@ -113,22 +113,45 @@ const Home: NextPage = () => {
               <p key={i} className="text-zinc-500/80 max-w-[500px] mb-14 text-sm font-thin mt-5">{desc}</p>
             ))
           )}
-          <div className="flex items-center gap-2 mb-5">
+          <div className="flex items-center gap-2 mb-2">
             <span className="text-zinc-500/80 text-xs">iPhone 15 Pro Max</span>
-            {!mounted || !bat ? (
+            {!mounted || !batteries ? (
               <div className="w-8 h-3 bg-zinc-700/40 rounded animate-pulse" />
             ) : (
               <>
                 <span className={`text-xs ${
-                  bat.Battery < 20 ? 'text-red-500' : 
-                  bat.Battery < 70 ? 'text-yellow-500' : 
+                  batteries.iPhone < 20 ? 'text-red-500' : 
+                  batteries.iPhone < 70 ? 'text-yellow-500' : 
                   'text-green-500'
                 }`}>
-                  {bat.Battery}%
+                  {batteries.iPhone}%
                 </span>
-                {bat.Battery < 20 ? (
+                {batteries.iPhone < 20 ? (
                   <IoBatteryDeadOutline className="text-red-500 text-lg" />
-                ) : bat.Battery < 70 ? (
+                ) : batteries.iPhone < 70 ? (
+                  <IoBatteryHalfOutline className="text-yellow-500 text-lg" />
+                ) : (
+                  <IoBatteryFull className="text-green-500 text-lg" />
+                )}
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2 mb-5">
+            <span className="text-zinc-500/80 text-xs">iPad Pro</span>
+            {!mounted || !batteries ? (
+              <div className="w-8 h-3 bg-zinc-700/40 rounded animate-pulse" />
+            ) : (
+              <>
+                <span className={`text-xs ${
+                  batteries.iPad < 20 ? 'text-red-500' : 
+                  batteries.iPad < 70 ? 'text-yellow-500' : 
+                  'text-green-500'
+                }`}>
+                  {batteries.iPad}%
+                </span>
+                {batteries.iPad < 20 ? (
+                  <IoBatteryDeadOutline className="text-red-500 text-lg" />
+                ) : batteries.iPad < 70 ? (
                   <IoBatteryHalfOutline className="text-yellow-500 text-lg" />
                 ) : (
                   <IoBatteryFull className="text-green-500 text-lg" />
