@@ -137,7 +137,7 @@ const Home: NextPage = () => {
             )}
           </div>
           <div className="flex items-center gap-2 mb-5">
-            <span className="text-zinc-500/80 text-xs">iPad Pro</span>
+            <span className="text-zinc-500/80 text-xs">iPad Pro (2025)</span>
             {!mounted || !batteries ? (
               <div className="w-8 h-3 bg-zinc-700/40 rounded animate-pulse" />
             ) : (
@@ -318,4 +318,5 @@ const HomePage = dynamic(() => Promise.resolve(Home), {
 });
 
 export default HomePage;
+
 
