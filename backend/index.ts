@@ -4,85 +4,124 @@ import { Elysia } from 'elysia';
 // for anyone reading this is the discord id used for the data fetching :3
 const USER_ID = '1389302831600631899';
 
-let lanyardPresence: any = null;
+let lanyardPresence: any = null; 
 
 class LanyardWS {
   private ws: WebSocket | null = null;
   private heartbeat: NodeJS.Timeout | null = null;
+  
   constructor(private userId: string) {
     this.connect();
   }
+  
   private connect() {
     this.ws = new WebSocket('wss://api.lanyard.rest/socket');
+    
     this.ws.onopen = () => {
+      console.log('lanyard connected');
       this.ws?.send(JSON.stringify({ op: 2, d: { subscribe_to_id: this.userId } }));
     };
+    
     this.ws.onmessage = (event) => this.handleMessage(event);
+    
     this.ws.onclose = () => {
+      console.log('lanyard disconnected, reconnecting...');
       this.clearHeartbeat();
       setTimeout(() => this.connect(), 2000);
     };
-    this.ws.onerror = () => this.ws?.close();
+    
+    this.ws.onerror = (err) => {
+      console.error('ws error:', err);
+      this.ws?.close();
+    };
   }
   private handleMessage(event: MessageEvent) {
     try {
       const msg = JSON.parse(event.data);
+      
       switch (msg.op) {
-        case 1:
+        case 1: 
           this.setHeartbeat(() => this.ws?.send(JSON.stringify({ op: 3 })), msg.d.heartbeat_interval);
           break;
-        case 0:
+        case 0: 
           if (msg.t === 'INIT_STATE' || msg.t === 'PRESENCE_UPDATE') {
             lanyardPresence = msg.d;
+            console.log('presence updated');
           }
           break;
-        case 10:
+        case 10: // heartbeat ack?? idk lanyard docs suck
           this.setHeartbeat(() => this.ws?.send(JSON.stringify({ op: 11 })), msg.d.heartbeat_interval);
           break;
-        case 11:
+        case 11: 
           break;
       }
     } catch (e) {
-      console.error('Lanyard WS error:', e);
+      console.error('failed to parse lanyard message:', e);
     }
   }
   private setHeartbeat(fn: () => void, interval: number) {
     this.clearHeartbeat();
     this.heartbeat = setInterval(fn, interval);
   }
+  
   private clearHeartbeat() {
-    if (this.heartbeat) clearInterval(this.heartbeat);
-    this.heartbeat = null;
+    if (this.heartbeat) {
+      clearInterval(this.heartbeat);
+      this.heartbeat = null;
+    }
   }
 }
 
-// battery stuff - just a simple cache
+// battery stuff - added ipad (1/09/25)
 class BatteryManager {
-  private data = { level: 85, lastUpdate: Date.now() };
+  private data = { 
+    iphone: { level: 85, lastUpdate: Date.now() },
+    ipad: { level: 72, lastUpdate: Date.now() }
+  };
   private apiKey = process.env.BATTERY_API_KEY;
 
   get() {
-    return { Battery: this.data.level };
+    return { 
+      iPhone: this.data.iphone.level,
+      iPad: this.data.ipad.level 
+    };
   }
 
-  update(level: number, key: string) {
+  getDevice(device: 'iphone' | 'ipad') {
+    const deviceData = this.data[device];
+    return { 
+      Battery: deviceData.level,
+      device: device,
+      lastUpdate: deviceData.lastUpdate 
+    };
+  }
+
+  update(level: number, device: 'iphone' | 'ipad', key: string) {
     if (!this.apiKey) {
-      throw new Error('api key not configured');
+      throw new Error('no api key set in env');
     }
     
     if (!key || key !== this.apiKey) {
-      throw new Error('nope, wrong key');
+      throw new Error('wrong api key');
     }
     
     if (level < 0 || level > 100) {
-      throw new Error('battery level makes no sense');
+      throw new Error('battery % is invalid');
+    }
+
+    if (!['iphone', 'ipad'].includes(device)) {
+      throw new Error('device must be iphone or ipad');
     }
     
-    this.data.level = level;
-    this.data.lastUpdate = Date.now();
-    console.log(`battery: ${level}% (${new Date().toLocaleTimeString()})`);
+    this.data[device].level = level;
+    this.data[device].lastUpdate = Date.now();
+    console.log(`${device}: ${level}% at ${new Date().toLocaleTimeString()}`);
     
     return this.get();
+  }
+
+  updateLegacy(level: number, key: string) {
+    return this.update(level, 'iphone', key);
   }
 }
 
@@ -99,17 +138,39 @@ const cors = (data: any) => new Response(JSON.stringify(data), {
 });
 
 const app = new Elysia()
+  // lanyard endpoints
   .get('/api/lanyard', () => 
-    lanyardPresence ? cors(lanyardPresence) : cors({ error: 'No presence data yet' })
+    lanyardPresence ? cors(lanyardPresence) : cors({ error: 'no presence data yet' })
   )
   .options('/api/lanyard', () => cors({ ok: true }))
   
-  .get('/api/battery', () => cors(battery.get()))
+  // battery endpoints
+  .get('/api/battery', () => cors(battery.get())) // both devices
+  .get('/api/battery/iphone', () => cors(battery.getDevice('iphone')))
+  .get('/api/battery/ipad', () => cors(battery.getDevice('ipad')))
   
+  // update specific device battery
+  .post('/api/battery/:device', async ({ params, body }) => {
+    try {
+      const { device } = params;
+      const { Battery: level, key } = body as any;
+      
+      if (!['iphone', 'ipad'].includes(device)) {
+        return cors({ error: 'device must be iphone or ipad' });
+      }
+      
+      const result = battery.update(level, device as 'iphone' | 'ipad', key);
+      return cors({ success: true, ...result });
+    } catch (err: any) {
+      return cors({ error: err.message });
+    }
+  })
+  
+  // legacy endpoint (defaults to iphone)
   .post('/api/battery', async ({ body }) => {
     try {
       const { Battery: level, key } = body as any;
-      const result = battery.update(level, key);
+      const result = battery.updateLegacy(level, key);
       return cors({ success: true, ...result });
     } catch (err: any) {
       return cors({ error: err.message });
@@ -117,7 +178,7 @@ const app = new Elysia()
   })
   
   .options('/api/battery', () => cors({ ok: true }))
+  .options('/api/battery/:device', () => cors({ ok: true }))
   .listen(3001);
 
-console.log('server running on :3001');
-
+console.log('server started on port 3001');
