@@ -32,7 +32,7 @@ class DiscordFetch {
 	public async fetch() {
 		this._setLoading(true);
 		try {
-			const res = await fetch("http://localhost:3001/api/lanyard");
+			const res = await fetch("http://rest.clt.lol/api/lanyard");
 			const data = await res.json();
 			if (data && data.discord_user && this._active) {
 				this._setDiscord(data);
