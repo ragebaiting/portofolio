@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "bunx next dev",
+    "build": "bunx next build",
+    "start": "bunx next start"
+  },
+  "dependencies": {
+    "motion": "^12.23.12",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-icons": "^5.5.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.0",
+    "autoprefixer": "^10.0.0",
+    "postcss": "^8.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}
