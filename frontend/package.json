@@ -3,8 +3,9 @@
   "private": true,
   "scripts": {
     "dev": "bunx next dev",
-    "build": "bunx next build",
-    "start": "bunx next start"
+    "build": "bunx next build || npx next build",
+    "start": "bunx next start || npx next start",
+    "build:netlify": "npx next build"
   },
   "dependencies": {
     "motion": "^12.23.12",
