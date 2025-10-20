@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: node
+    plan: free
+    buildCommand: bun install
+    startCommand: bun run start
+    envVars:
+      - key: NODE_ENV
+        value: production
