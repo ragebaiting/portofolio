@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "bun run index.ts"
+    "start": "bun run index.ts",
+    "build": "echo 'nothing to build here'"
   },
   "dependencies": {
     "elysia": "^0.7.0",
