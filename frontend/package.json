@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "dev": "bunx next dev",
-    "build": "bunx next build || npx next build",
-    "start": "bunx next start || npx next start",
-    "build:netlify": "npx next build"
+    "build": "next build",
+    "start": "next start",
+    "build:netlify": "next build"
   },
   "dependencies": {
     "motion": "^12.23.12",
@@ -20,6 +20,7 @@
     "postcss": "^8.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   }
 }
