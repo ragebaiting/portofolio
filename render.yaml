@@ -3,6 +3,7 @@ services:
     name: portfolio-backend
     env: node
     plan: free
+    rootDir: backend
     buildCommand: bun install
     startCommand: bun run start
     envVars:

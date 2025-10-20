@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "bun run index.ts",
-    "build": "bun install && echo 'dependencies installed'",
-    "install": "bun install"
+    "build": "echo 'backend ready'"
   },
   "dependencies": {
     "elysia": "^1.1.0",
