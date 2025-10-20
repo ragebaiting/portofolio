@@ -7,8 +7,9 @@
     "build": "echo 'nothing to build here'"
   },
   "dependencies": {
-    "elysia": "^0.7.0",
-    "ws": "^8.18.3"
+    "elysia": "^1.1.0",
+    "ws": "^8.18.3",
+    "@sinclair/typebox": "^0.31.28"
   },
   "devDependencies": {
     "typescript": "^5.0.0"
