@@ -60,4 +60,15 @@
 
 body {
 	font-family: 'Geist Sans', sans-serif;
+	cursor: url('/cursor.cur'), auto;
+	background: #000 !important;
+}
+
+::selection {
+	background: #a78bfa !important; /* Tailwind purple-400 */
+	color: #fff !important;
+}
+::-moz-selection {
+	background: #a78bfa !important;
+	color: #fff !important;
 }

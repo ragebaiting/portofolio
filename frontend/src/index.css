@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body {
+	background: #000 !important;
+	cursor: url('/cursor.cur'), auto;
+}
+
+::selection {
+	background: #a78bfa; /* Tailwind purple-400 */
+	color: #fff;
+}
+
+::-moz-selection {
+	background: #a78bfa;
+	color: #fff;
+}

@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 import { spotify } from '../hooks/spotify';
 import { discord } from '../hooks/discord';
 import { time } from '../hooks/time';
@@ -14,7 +15,7 @@ import { SiRoblox } from 'react-icons/si';
 import { IoBatteryFull, IoBatteryHalfOutline, IoBatteryDeadOutline } from "react-icons/io5";
 
 const Status = {
-  dnd: { text: 'text-red-500', bg: 'bg-red-500' },
+  dnd: { text: 'text-purple-400', bg: 'bg-purple-400' },
   idle: { text: 'text-yellow-500', bg: 'bg-yellow-500' },
   online: { text: 'text-green-500', bg: 'bg-green-500' },
   offline: { text: 'text-gray-500', bg: 'bg-gray-500' },
@@ -92,8 +93,14 @@ const Home: NextPage = () => {
         <meta name="twitter:image" content="https://clt.baby/img/pfp.jpg" />
       </Head>
 
-      <div className="flex flex-col min-h-screen bg-zinc-950" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
-        <main className="flex-1 p-20">
+      <div className="flex min-h-screen bg-black" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+        <motion.main
+          className="flex-1 p-20 w-3/5 flex flex-col justify-between min-h-screen"
+          style={{ width: '60%' }}
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <div className="w-full">
           <div className="w-20 h-20 rounded-md mb-2 flex items-center justify-center overflow-hidden">
             {descLoading ? (
@@ -106,7 +113,7 @@ const Home: NextPage = () => {
             className="text-white text-4xl leading-snug"
             style={{ fontFamily: 'Crimson Pro, serif' }}
           >
-            Cybersec <span className="italic">Analyst</span>,<div className="ml-1 w-12 h-5 text-xs bg-zinc-700/40 border border-zinc-500/20 text-zinc-400/60 rounded inline-flex items-center justify-center">he/him</div><br />
+            Cybersec <span className="italic">Analyst</span>,<div className="ml-1 w-12 h-5 text-xs bg-purple-800/40 border border-purple-700/40 text-purple-500 rounded inline-flex items-center justify-center">he/him</div><br />
             Full-Stack Software <span className="italic">Engineer</span>.
           </h1>
           {descLoading ? (
@@ -123,18 +130,18 @@ const Home: NextPage = () => {
             ) : (
               <>
                 <span className={`text-xs ${
-                  batteries.iPhone < 20 ? 'text-red-500' : 
-                  batteries.iPhone < 70 ? 'text-yellow-500' : 
-                  'text-green-500'
+                  batteries.iPhone < 20 ? 'text-purple-500' : 
+                  batteries.iPhone < 70 ? 'text-purple-400' : 
+                  'text-purple-300'
                 }`}>
                   {batteries.iPhone}%
                 </span>
                 {batteries.iPhone < 20 ? (
-                  <IoBatteryDeadOutline className="text-red-500 text-lg" />
+                  <IoBatteryDeadOutline className="text-purple-500 text-lg" />
                 ) : batteries.iPhone < 70 ? (
-                  <IoBatteryHalfOutline className="text-yellow-500 text-lg" />
+                  <IoBatteryHalfOutline className="text-purple-400 text-lg" />
                 ) : (
-                  <IoBatteryFull className="text-green-500 text-lg" />
+                  <IoBatteryFull className="text-purple-300 text-lg" />
                 )}
               </>
             )}
@@ -146,18 +153,18 @@ const Home: NextPage = () => {
             ) : (
               <>
                 <span className={`text-xs ${
-                  batteries.iPad < 20 ? 'text-red-500' : 
-                  batteries.iPad < 70 ? 'text-yellow-500' : 
-                  'text-green-500'
+                  batteries.iPad < 20 ? 'text-purple-500' : 
+                  batteries.iPad < 70 ? 'text-purple-400' : 
+                  'text-purple-300'
                 }`}>
                   {batteries.iPad}%
                 </span>
                 {batteries.iPad < 20 ? (
-                  <IoBatteryDeadOutline className="text-red-500 text-lg" />
+                  <IoBatteryDeadOutline className="text-purple-500 text-lg" />
                 ) : batteries.iPad < 70 ? (
-                  <IoBatteryHalfOutline className="text-yellow-500 text-lg" />
+                  <IoBatteryHalfOutline className="text-purple-400 text-lg" />
                 ) : (
-                  <IoBatteryFull className="text-green-500 text-lg" />
+                  <IoBatteryFull className="text-purple-300 text-lg" />
                 )}
               </>
             )}
@@ -178,8 +185,8 @@ const Home: NextPage = () => {
                 className="w-14 h-14 rounded"
               />
               <div>
-                <p className="text-green-500 text-xs">
-                  Listening to <span className="font-semibold">{spotifyData.song}</span> by {spotifyData.artist}
+                <p className="text-purple-500 text-xs">
+                  Listening to <span className="font-semibold text-purple-400">{spotifyData.song}</span> by {spotifyData.artist}
                 </p>
                 <p className="text-zinc-400/40 text-[10px]">Album: {spotifyData.album}</p>
               </div>
@@ -195,7 +202,7 @@ const Home: NextPage = () => {
             </div>
           ) : (
             experiences.map((exp, i) => (
-              <p key={i} className="text-zinc-600/50 text-xs ml-3 flex items-center gap-2">- {exp.role} <div className="text-[8px] text-zinc-500 bg-zinc-700/20 border border-zinc-500/10 rounded inline-flex items-center justify-center px-1 h-5">{exp.period}</div></p>
+              <p key={i} className="text-zinc-400 text-xs ml-3 flex items-center gap-2 mt-2">- <span className="text-zinc-400">{exp.role}</span> <div className={`text-[8px] rounded inline-flex items-center justify-center px-1 h-5 ${['2026 - Present','2026 - 2026','2023 - 2024'].includes(exp.period) ? 'text-purple-500 bg-purple-800/40 border border-purple-700/40' : 'text-zinc-500 bg-zinc-700/20 border border-zinc-500/10'}`}>{exp.period}</div></p>
             ))
           )}
           <p className="text-zinc-400/50 text-sm font-semibold mt-5">/ Projects</p>
@@ -208,104 +215,121 @@ const Home: NextPage = () => {
             <div className="text-zinc-400/20 ml-3 text-xs">nothing here.. yet.. :(</div>
           )}
           </div>
-          
-        </main>
-        <div className="p-20 select-none w-full">
-          <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
-            <div className="flex items-center gap-3 mb-3">
-              {(!discordData?.discord_user || discordLoading) ? (
-                <>
-                  <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
-                  <div className="flex flex-col gap-1 ml-2">
-                    <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
-                    <div className="w-20 h-3 bg-zinc-700/20 rounded animate-pulse" />
-                    <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <img
-                    src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
-                    alt="Discord Avatar"
-                    className="w-14 h-14 rounded"
-                  />
-                  <div>
-                    <p className="text-zinc-300 text-xs font-semibold">
-                      {discordData.discord_user.display_name || `@${discordData.discord_user.username}`}
-                    </p>
-                    <p className="text-zinc-400/60 text-xs -mt-1 mb-1">
-                      @{discordData.discord_user.username}
-                    </p>
-                    <div className="flex items-center mt-1">
-                      <StatusDot status={discordData.discord_status} />
-                      <span className={`text-xs font-semibold ${getStatus(discordData.discord_status).text}`}>
-                        {discordData.discord_status}
-                      </span>
+          <div className="select-none w-full md:w-auto mt-10">
+            <div className="flex flex-col gap-2 text-xs text-zinc-400/80">
+              <div className="flex items-center gap-3 mb-3">
+                {(!discordData?.discord_user || discordLoading) ? (
+                  <>
+                    <div className="w-14 h-14 rounded bg-zinc-700/40 animate-pulse" />
+                    <div className="flex flex-col gap-1 ml-2">
+                      <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+                      <div className="w-20 h-3 bg-zinc-700/20 rounded animate-pulse" />
+                      <div className="w-16 h-3 bg-zinc-700/20 rounded animate-pulse mt-1" />
                     </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="flex items-center gap-4 mb-1 text-lg">
-              <a
-                href="https://github.com/ragebaiting"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition flex items-center gap-1"
-              >
-                <FaGithub />
-                <span className="text-xs font-normal ml-1">[Github]</span>
-              </a>
-              <a
-                href="https://roblox.com/users/8756713122/profile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition flex items-center gap-1"
-              >
-                <SiRoblox />
-                <span className="text-xs font-normal ml-1">[Roblox]</span>
-              </a>
-              <a
-                href="https://discord.com/users/1477032112694759657"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition flex items-center gap-1"
-              >
-                <FaDiscord />
-                <span className="text-xs font-normal ml-1">[Discord]</span>
-              </a>
-              <a
-                href="https://x.com/clthatesyou"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition flex items-center gap-1"
-              >
-                <FaTwitter />
-                <span className="text-xs font-normal ml-1">[Twitter (x)]</span>
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              {timeLoading ? (
-                <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
-              ) : (
-                <span>
-                  {mounted ? `${timeStr} - Likely ${isSleeping ? 'sleeping' : 'awake'}.` : 'Loading...'}
-                </span>
-              )}
-              <span className="mx-2">•</span>
-              <span>🇬🇧 London, UK</span>
-              <span className="mx-2">•</span>
-              <a
-                href="https://github.com/ragebaiting/portofolio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-200 underline text-xs"
-              >
-                Page Source
-              </a>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={`https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`}
+                      alt="Discord Avatar"
+                      className="w-14 h-14 rounded"
+                    />
+                    <div>
+                      <p className="text-zinc-300 text-xs font-semibold">
+                        {discordData.discord_user.display_name || `@${discordData.discord_user.username}`}
+                      </p>
+                      <p className="text-zinc-400/60 text-xs -mt-1 mb-1">
+                        @{discordData.discord_user.username}
+                      </p>
+                      <div className="flex items-center mt-1">
+                        <StatusDot status={discordData.discord_status} />
+                        <span className={`text-xs font-semibold ${getStatus(discordData.discord_status).text}`}>
+                          {discordData.discord_status}
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="flex items-center gap-4 mb-1 text-lg">
+                <a
+                  href="https://github.com/ragebaiting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition flex items-center gap-1"
+                >
+                  <FaGithub />
+                  <span className="text-xs font-normal ml-1">[Github]</span>
+                </a>
+                <a
+                  href="https://roblox.com/users/8756713122/profile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition flex items-center gap-1"
+                >
+                  <SiRoblox />
+                  <span className="text-xs font-normal ml-1">[Roblox]</span>
+                </a>
+                <a
+                  href="https://discord.com/users/1477032112694759657"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition flex items-center gap-1"
+                >
+                  <FaDiscord />
+                  <span className="text-xs font-normal ml-1">[Discord]</span>
+                </a>
+                <a
+                  href="https://x.com/clthatesyou"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition flex items-center gap-1"
+                >
+                  <FaTwitter />
+                  <span className="text-xs font-normal ml-1">[Twitter (x)]</span>
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                {timeLoading ? (
+                  <div className="w-32 h-4 bg-zinc-700/40 rounded animate-pulse" />
+                ) : (
+                  <span>
+                    {mounted ? `${timeStr} - Likely ${isSleeping ? 'sleeping' : 'awake'}.` : 'Loading...'}
+                  </span>
+                )}
+                <span className="mx-2">•</span>
+                <span>🇬🇧 London, UK</span>
+                <span className="mx-2">•</span>
+                <a
+                  href="https://github.com/ragebaiting/portofolio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-500 hover:text-purple-400 underline text-xs"
+                >
+                  Page Source
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.main>
+        <motion.div
+          className="hidden md:block min-h-screen flex-shrink-0"
+          style={{
+            width: '100%',
+            maxWidth: '900px',
+            margin: '2.5vw',
+            backgroundImage: "url('/itOXlDm2NEepUgDR0wvxlmcfww.jpeg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            borderRadius: '1.5rem',
+            boxShadow: '0 0 32px 0 rgba(0,0,0,0.5)',
+            border: '2px solid rgba(0,0,0,0.7)',
+          }}
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        />
       </div>
     </>
   );
