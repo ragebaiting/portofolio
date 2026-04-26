@@ -1,9 +1,15 @@
 {
   "name": "portfolio-monorepo",
   "private": true,
-  "workspaces": ["backend", "frontend"],
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "build": "cd backend && bun install",
     "start": "cd backend && bun run start"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0"
   }
 }
