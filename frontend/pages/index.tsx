@@ -69,10 +69,10 @@ const Home: NextPage = () => {
 
   const [expLoading, setExpLoading] = useState(false);
   const experiences = [
-    { role: "Web engineer @ Inter.org", period: "2026 - Present" },
+    { role: "Sys. Admin @ Inter.org", period: "2026 - Present" },
     { role: "Web engineer @ Oppoah.com", period: "2026 - Present" },
-    { role: "Engineer @ Indicia.app", period: "2026 - 2026" },
-    { role: "Lead Dev @ Datawave", period: "2023 - 2024" }
+    { role: "Engineer @ Indicia.app", period: "2024 - 2026" },
+    { role: "Lead Dev @ Datawave", period: "2023 - 2025" }
   ];
 
   return (
